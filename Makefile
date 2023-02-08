@@ -11,11 +11,11 @@ BIN_DIR=binary
 SRC_DIR=source
 
 
-all: run
+all: $(BIN_DIR) run.exe
 
 
 # Завершает сборку
-run: $(addprefix $(BIN_DIR)/, main.o stack.o)
+run.exe: $(addprefix $(BIN_DIR)/, main.o stack.o)
 	$(COMPILER) $^ -o run.exe
 
 
@@ -27,3 +27,8 @@ $(BIN_DIR)/main.o: $(addprefix $(SRC_DIR)/, main.cpp stack.hpp)
 # Предварительная сборка stack
 $(BIN_DIR)/stack.o: $(addprefix $(SRC_DIR)/, stack.cpp stack.hpp)
 	$(COMPILER) $(FLAGS) -c $< -o $@
+
+
+# Создание папки для объектников, если она еще не существует
+$(BIN_DIR):
+	mkdir $@
